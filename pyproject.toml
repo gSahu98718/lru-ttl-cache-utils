@@ -1,6 +1,6 @@
 [project]
 name = "lru-ttl-cache-utils"
-version = "0.1.1"
+version = "0.1.2"
 description = "Time-bounded LRU cache implemented with the standard library."
 requires-python = ">=3.10"
 dependencies = []
