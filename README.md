@@ -24,3 +24,10 @@ The trade-off: expiry is lazy. An entry whose TTL has elapsed is removed only wh
 `default_ttl` and per-entry `ttl` are measured in whatever units your `clock` returns; if you use the default `time.monotonic`, the units are seconds. An entry inserted at clock value `T` with `ttl=5` is considered expired once the clock reads `>= T + 5`. Note the inclusive boundary: a `ttl` of 5 means the entry is live at `T + 4.999` and gone at `T + 5`.
 
 `maxsize` of 0 disables caching entirely: every `put` is a no-op and every `get` returns the default. This is the supported way to turn the cache off without changing call sites.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
